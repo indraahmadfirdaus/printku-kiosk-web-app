@@ -171,7 +171,7 @@ function PrintCodeInput() {
   }, []); // Empty dependency array - hanya run sekali saat mount
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col min-w-screen">
       {/* Header */}
       <header className="bg-gradient-to-r from-blackboxz-dark to-blackboxz-gray py-6 shadow-lg">
         <div className="container mx-auto px-4">

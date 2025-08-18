@@ -226,7 +226,7 @@ function ScreenSaver() {
           <img
             src={currentAd.image_url}
             alt={currentAd.title}
-            className="max-w-full max-h-full object-contain"
+            className="max-w-full max-h-full object-cover"
             onError={() => nextAd()}
           />
         ) : currentAd.type === 'video' && currentAd.youtube_id ? (

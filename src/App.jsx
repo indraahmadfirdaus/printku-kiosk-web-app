@@ -5,7 +5,6 @@ import PrintCodeInput from './pages/PrintCodeInput';
 import ScreenSaver from './pages/ScreenSaver';
 import KioskSetupModal from './components/KioskSetupModal';
 import { useKiosk } from './hooks/useKiosk';
-import './App.css';
 
 const queryClient = new QueryClient();
 
