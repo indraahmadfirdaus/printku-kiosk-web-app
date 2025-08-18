@@ -4,7 +4,7 @@ import { Printer, ArrowRight, AlertTriangle, Box } from 'lucide-react';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import InputDisplay from '../components/InputDisplay';
 import KioskDisplay from '../components/KioskDisplay';
-import { useActiveAds, useBatchTrackAdViews } from '../hooks/useAds';
+import { useActiveAds, useBatchTrackAdViews, useCleanupInactiveAdViews } from '../hooks/useAds';
 import useAdsStore from '../stores/adsStore';
 import { useKiosk } from '../hooks/useKiosk';
 import { usePrint } from '../hooks/usePrint';
@@ -22,6 +22,7 @@ function PrintCodeInput() {
   // API hooks - consolidated single declaration
   const { data: adsData, isLoading: adsLoading, error: adsError, isSuccess } = useActiveAds();
   const batchTrackMutation = useBatchTrackAdViews();
+  const cleanupMutation = useCleanupInactiveAdViews();
   const { getPendingViewCounts, ads, incrementViewCount } = useAdsStore();
   
   // Debug logging
@@ -134,29 +135,31 @@ function PrintCodeInput() {
   // Track view counts when component mounts (returning from screensaver)
   // Updated to use batch tracking with better logging
   useEffect(() => {
-    const pendingViews = getPendingViewCounts();
-    
-    console.log('Current view counts in store:', useAdsStore.getState().viewCounts);
-    console.log('Pending views to send:', pendingViews);
-    
-    // Only send if there are pending views
-    if (pendingViews.length > 0) {
-      console.log('Sending batch view counts:', pendingViews);
-      
-      // Send all view counts in one batch request
-      batchTrackMutation.mutate(pendingViews, {
-        onSuccess: (results) => {
-          console.log('Batch tracking success:', results);
-          console.log('View counts after clearing:', useAdsStore.getState().viewCounts);
-        },
-        onError: (error) => {
-          console.error('Batch tracking failed:', error);
-          console.log('View counts preserved:', useAdsStore.getState().viewCounts);
+    // Cleanup inactive ads first
+    cleanupMutation.mutate(null, {
+      onSuccess: (inactiveAdIds) => {
+        console.log('Cleaned up inactive ads:', inactiveAdIds);
+
+        // Then send remaining valid view counts
+        const pendingViews = getPendingViewCounts();
+        if (pendingViews.length > 0) {
+          console.log('Sending batch view counts:', pendingViews);
+          
+          batchTrackMutation.mutate(pendingViews, {
+            onSuccess: (results) => {
+              console.log('Batch tracking success:', results);
+              console.log('View counts after clearing:', useAdsStore.getState().viewCounts);
+            },
+            onError: (error) => {
+              console.error('Batch tracking failed:', error);
+              console.log('View counts preserved:', useAdsStore.getState().viewCounts);
+            }
+          });
+        } else {
+          console.log('No pending view counts to send');
         }
-      });
-    } else {
-      console.log('No pending view counts to send');
-    }
+      }
+    });
   }, []); // Empty dependency array - only run once on mount
 
   // Auto-refetch kiosk data ketika komponen dimount dan ada kioskCode
@@ -168,7 +171,7 @@ function PrintCodeInput() {
   }, []); // Empty dependency array - hanya run sekali saat mount
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
       {/* Header */}
       <header className="bg-gradient-to-r from-blackboxz-dark to-blackboxz-gray py-6 shadow-lg">
         <div className="container mx-auto px-4">
@@ -347,22 +350,3 @@ function PrintCodeInput() {
 }
 
 export default PrintCodeInput;
-
-
-// Tambahkan di PrintCodeInput component
-const cleanupMutation = useCleanupInactiveAdViews();
-
-useEffect(() => {
-  // Cleanup inactive ads first
-  cleanupMutation.mutate(null, {
-    onSuccess: (inactiveAdIds) => {
-      console.log('Cleaned up inactive ads:', inactiveAdIds);
-      
-      // Then send remaining valid view counts
-      const pendingViews = getPendingViewCounts();
-      if (pendingViews.length > 0) {
-        batchTrackMutation.mutate(pendingViews);
-      }
-    }
-  });
-}, []);
