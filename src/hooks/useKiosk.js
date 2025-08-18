@@ -17,7 +17,7 @@ export const useKiosk = () => {
 
     try {
       const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8181';
-      const response = await fetch(`${BASE_URL}/api/kiosks/code/${kioskCode}`);
+      const response = await fetch(`${BASE_URL}/kiosks/code/${kioskCode}`);
       
       if (response.ok) {
         const result = await response.json();

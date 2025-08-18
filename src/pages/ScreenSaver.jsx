@@ -34,7 +34,7 @@ function ScreenSaver() {
     try {
       setIsLoading(true);
       const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8181';
-      const response = await fetch(`${BASE_URL}/api/ads/active`, {
+      const response = await fetch(`${BASE_URL}/ads/active`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -84,7 +84,7 @@ function ScreenSaver() {
   const trackAdView = async (adId) => {
     try {
       const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8181';
-      const response = await fetch(`${BASE_URL}/api/ads/view-count`, {
+      const response = await fetch(`${BASE_URL}/ads/view-count`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ads_id: adId })

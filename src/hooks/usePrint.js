@@ -12,7 +12,7 @@ export const usePrint = () => {
   const validatePrintCode = async (printCode) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${BASE_URL}/api/jobs/code/${printCode}`);
+      const response = await fetch(`${BASE_URL}/jobs/code/${printCode}`);
       const result = await response.json();
       
       if (!response.ok || !result.success) {
@@ -48,7 +48,7 @@ export const usePrint = () => {
         throw new Error('Tidak ada printer yang tersedia');
       }
 
-      const response = await fetch(`${BASE_URL}/api/kiosks/print`, {
+      const response = await fetch(`${BASE_URL}/kiosks/print`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
