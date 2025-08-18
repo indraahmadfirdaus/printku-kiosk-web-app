@@ -2,7 +2,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8181';
 
 // Fetch active ads
 export const fetchActiveAds = async () => {
-  const response = await fetch(`${BASE_URL}/api/ads/active`, {
+  const response = await fetch(`${BASE_URL}/ads/active`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ export const trackAdView = async (adsId, count = 1) => {
     requestBody.count = count;
   }
   
-  const response = await fetch(`${BASE_URL}/api/ads/view-count`, {
+  const response = await fetch(`${BASE_URL}/ads/view-count`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
