@@ -579,7 +579,7 @@ function PrintConfirmationModal({ isOpen, onClose, printJobData, printCode }) {
 
                     <iframe
                       ref={pdfPreviewIframeRef}
-                      src={fileUrl}
+                      src={`https://mozilla.github.io/pdf.js/web/viewer.html?file=${encodeURIComponent(fileUrl)}`}
                       className="w-full h-96 border border-gray-300 rounded"
                       title="Print Preview"
                       onLoad={() => {
