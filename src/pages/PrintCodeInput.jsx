@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Printer, ArrowRight, AlertTriangle, Box } from 'lucide-react';
+import { Printer, ArrowRight, AlertTriangle } from 'lucide-react';
+import whiteLogo from '../assets/white.png';
 import VirtualKeyboard from '../components/VirtualKeyboard';
 import InputDisplay from '../components/InputDisplay';
 import KioskDisplay from '../components/KioskDisplay';
@@ -177,11 +178,7 @@ function PrintCodeInput() {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Box className="w-6 h-6 text-blackboxz-primary" />
-              <div className="flex flex-col items-start ml-2">
-                <span className="text-white font-bold tracking-wide">BlackBoxZ</span>
-                <span className="text-xs text-blackboxz-accent tracking-widest uppercase">KIOSK PRINTING SYSTEM</span>
-              </div>
+              <img src={whiteLogo} alt="BlackBoxZ" className="h-8 w-auto" />
             </div>
             
             {/* Tampilkan info kiosk di header jika ada */}

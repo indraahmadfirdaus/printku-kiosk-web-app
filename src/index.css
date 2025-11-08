@@ -7,6 +7,22 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
 }
 
+/* Saira Variable Fonts */
+@font-face {
+  font-family: 'Saira';
+  src: url('./assets/fonts/Saira-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Saira';
+  src: url('./assets/fonts/Saira-Italic-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* YouTube Fullscreen Fix */
 .youtube-container iframe {
   position: absolute !important;
@@ -45,4 +61,9 @@ body {
   to {
     width: 100%;
   }
+}
+
+body {
+  /* Gunakan Tailwind default sans yang diarahkan ke Saira */
+  @apply font-sans;
 }

@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -8,12 +7,15 @@ export default {
     extend: {
       colors: {
         // BlackBoxZ Aviation Orange Theme
-        'blackboxz-primary': '#FF6B00',      // International Orange (aviation standard)
-        'blackboxz-secondary': '#E55A00',    // Darker orange for hover states
-        'blackboxz-accent': '#FF8533',       // Lighter orange for accents
-        'blackboxz-dark': '#1A1A1A',        // Deep black for contrast
-        'blackboxz-gray': '#2D2D2D',        // Dark gray for secondary elements
-      }
+        'blackboxz-primary': '#FF6B00',
+        'blackboxz-secondary': '#E55A00',
+        'blackboxz-accent': '#FF8533',
+        'blackboxz-dark': '#1A1A1A',
+        'blackboxz-gray': '#2D2D2D',
+      },
+      fontFamily: {
+        sans: ['Saira', 'system-ui', '-apple-system', 'sans-serif'],
+      },
     },
   },
   plugins: [require("daisyui")],
@@ -21,17 +23,17 @@ export default {
     themes: [
       {
         blackboxz: {
-          "primary": "#FF6B00",      // International Orange
-          "secondary": "#E55A00",    // Darker Orange
-          "accent": "#FF8533",       // Light Orange
-          "neutral": "#2D2D2D",      // Dark Gray
-          "base-100": "#ffffff",     // White background
-          "base-200": "#f8f8f8",     // Light gray
-          "base-300": "#e5e5e5",     // Medium gray
-          "info": "#0ea5e9",         // Blue for info
-          "success": "#22c55e",      // Green for success
-          "warning": "#f59e0b",      // Amber for warning
-          "error": "#ef4444",        // Red for error
+          "primary": "#FF6B00",
+          "secondary": "#E55A00",
+          "accent": "#FF8533",
+          "neutral": "#2D2D2D",
+          "base-100": "#ffffff",
+          "base-200": "#f8f8f8",
+          "base-300": "#e5e5e5",
+          "info": "#0ea5e9",
+          "success": "#22c55e",
+          "warning": "#f59e0b",
+          "error": "#ef4444",
         },
       },
       "light"

@@ -35,15 +35,20 @@ export const usePrint = () => {
   };
 
   // POST - Execute print job
-  const executePrint = async (printCode) => {
+  const executePrint = async (printCode, printCategory) => {
     setIsLoading(true);
     try {
-      // Cari printer pertama yang sesuai dengan tipe print
       const printers = getPrinters();
-      const availablePrinter = printers.find(printer => 
-        printer.is_online && printer.paper_count > 0
-      );
-      
+      const isPhoto = printCategory === 'PHOTO';
+      const availablePrinter =
+        printers.find(
+          (printer) =>
+            printer.is_online &&
+            printer.paper_count > 0 &&
+            (isPhoto ? printer.category === 'PHOTO' : printer.category !== 'PHOTO')
+        ) ||
+        printers.find((printer) => printer.is_online && printer.paper_count > 0);
+
       if (!availablePrinter) {
         throw new Error('Tidak ada printer yang tersedia');
       }
@@ -55,16 +60,16 @@ export const usePrint = () => {
         },
         body: JSON.stringify({
           print_code: printCode,
-          printer_id: availablePrinter.id
-        })
+          printer_id: availablePrinter.id,
+        }),
       });
-      
+
       const result = await response.json();
-      
+
       if (!response.ok || !result.success) {
         throw new Error(result.message || 'Failed to execute print');
       }
-      
+
       toast.success('Success');
       return result.data;
     } catch (error) {
@@ -79,6 +84,6 @@ export const usePrint = () => {
   return {
     validatePrintCode,
     executePrint,
-    isLoading
+    isLoading,
   };
 };

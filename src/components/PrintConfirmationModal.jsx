@@ -63,7 +63,8 @@ function PrintConfirmationModal({ isOpen, onClose, printJobData, printCode }) {
 
     const requiredPages = getRequiredPages();
     const availablePaper = printers.reduce((total, printer) => {
-      return total + (printer.paper_count || 0);
+      const matches = isPhotoType ? printer.category === 'PHOTO' : printer.category !== 'PHOTO';
+      return total + (matches ? (printer.paper_count || 0) : 0);
     }, 0);
 
     return {
@@ -148,7 +149,7 @@ function PrintConfirmationModal({ isOpen, onClose, printJobData, printCode }) {
     setIsPrinting(true);
     
     try {
-      await executePrint(printCode);
+      await executePrint(printCode, isPhotoType ? 'PHOTO' : 'DOCUMENT');
       console.log('Print job marked as completed');
       
       // Refetch kiosk data to update paper count
